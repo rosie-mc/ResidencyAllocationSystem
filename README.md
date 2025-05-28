@@ -17,7 +17,7 @@ This project is a Spring Boot application that automates the allocation of stude
 
 ### 1. Install PostgreSQL
 
-- Download PostgreSQL 15.x from https://www.postgresql.org/download/
+- Download PostgreSQL 16.x from https://www.postgresql.org/download/
 - During setup, remember your username and password (e.g., user: postgres)
 - Create a new database using pgAdmin or terminal:
 
