@@ -1,81 +1,71 @@
-CREATE TABLE "users" (
-  "id" serial PRIMARY KEY,
-  "role" enum(3),
-  "first_name" varchar(40),
-  "last_name" varchar(40),
-  "email" varchar(40),
-  "password" varchar(20),
-  "course_code" varchar(15),
-  "college_year" enum(5)
+
+-- ENUM TYPES
+CREATE TYPE user_role AS ENUM ('stu', 'adm', 'com');
+CREATE TYPE college_year_enum AS ENUM ('1', '2', '3', '4', '5');
+
+-- USERS TABLE
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    role user_role NOT NULL,
+    first_name VARCHAR(40) NOT NULL,
+    last_name VARCHAR(40) NOT NULL,
+    email VARCHAR(40) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    course_code VARCHAR(15),
+    college_year college_year_enum
 );
 
-CREATE TABLE "residencies" (
-  "id" serial PRIMARY KEY,
-  "job_title" varchar(50),
-  "job_description" text,
-  "job_slots" integer,
-  "interview_quota" integer,
-  "recruitment_description" text,
-  "company_id" int
+-- LOGS TABLE
+CREATE TABLE logs (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    action VARCHAR(255),
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE "preferences" (
-  "id" serial PRIMARY KEY,
-  "student_id" int,
-  "residency_id" int,
-  "rank_position" int,
-  "round" int,
-  "ranking_stage" int
+-- RESIDENCIES TABLE
+CREATE TABLE residencies (
+    id SERIAL PRIMARY KEY,
+    job_title VARCHAR(50),
+    job_description TEXT,
+    job_slots INTEGER,
+    interview_quota INTEGER,
+    recruitment_description TEXT,
+    company_id INTEGER REFERENCES users(id) ON DELETE SET NULL
 );
 
-CREATE TABLE "interviews" (
-  "id" serial PRIMARY KEY,
-  "student_id" int,
-  "residency_id" int,
-  "score" int
+-- PREFERENCES TABLE
+CREATE TABLE preferences (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
+    rank_position INTEGER,
+    round INTEGER,
+    ranking_stage INTEGER
 );
 
-CREATE TABLE "matches" (
-  "id" serial PRIMARY KEY,
-  "student_id" int,
-  "residency_id" int,
-  "round" int,
-  "timestamp" timestamp
+-- INTERVIEWS TABLE
+CREATE TABLE interviews (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
+    score INTEGER
 );
 
-CREATE TABLE "cvs" (
-  "id" serial PRIMARY KEY,
-  "student_id" int,
-  "residency_id" int,
-  "file_url" varchar(500),
-  "uploaded_time" timestamp
+-- CVS TABLE
+CREATE TABLE cvs (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
+    file_url VARCHAR(500),
+    uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE "logs" (
-  "id" serial PRIMARY KEY,
-  "user_id" int,
-  "action" varchar(255),
-  "timestamp" timestamp
+-- MATCHES TABLE
+CREATE TABLE matches (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
+    round INTEGER,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-COMMENT ON COLUMN "interviews"."score" IS 'Range: 0–10';
-
-ALTER TABLE "residencies" ADD FOREIGN KEY ("company_id") REFERENCES "users" ("id");
-
-ALTER TABLE "preferences" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
-
-ALTER TABLE "preferences" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
-
-ALTER TABLE "interviews" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
-
-ALTER TABLE "interviews" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
-
-ALTER TABLE "matches" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
-
-ALTER TABLE "matches" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
-
-ALTER TABLE "cvs" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
-
-ALTER TABLE "cvs" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
-
-ALTER TABLE "logs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
