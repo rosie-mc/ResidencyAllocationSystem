@@ -8,7 +8,7 @@ This project is a Spring Boot application that automates the allocation of stude
 - Java 17
 - Spring Boot 3.x
 - Spring Data JPA
-- PostgreSQL 15.x
+- PostgreSQL 16.x
 - pgAdmin (optional GUI)
 - (Optional) Lombok for cleaner entity code
 
