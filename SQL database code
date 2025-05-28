@@ -1,0 +1,81 @@
+CREATE TABLE "users" (
+  "id" serial PRIMARY KEY,
+  "role" enum(3),
+  "first_name" varchar(40),
+  "last_name" varchar(40),
+  "email" varchar(40),
+  "password" varchar(20),
+  "course_code" varchar(15),
+  "college_year" enum(5)
+);
+
+CREATE TABLE "residencies" (
+  "id" serial PRIMARY KEY,
+  "job_title" varchar(50),
+  "job_description" text,
+  "job_slots" integer,
+  "interview_quota" integer,
+  "recruitment_description" text,
+  "company_id" int
+);
+
+CREATE TABLE "preferences" (
+  "id" serial PRIMARY KEY,
+  "student_id" int,
+  "residency_id" int,
+  "rank_position" int,
+  "round" int,
+  "ranking_stage" int
+);
+
+CREATE TABLE "interviews" (
+  "id" serial PRIMARY KEY,
+  "student_id" int,
+  "residency_id" int,
+  "score" int
+);
+
+CREATE TABLE "matches" (
+  "id" serial PRIMARY KEY,
+  "student_id" int,
+  "residency_id" int,
+  "round" int,
+  "timestamp" timestamp
+);
+
+CREATE TABLE "cvs" (
+  "id" serial PRIMARY KEY,
+  "student_id" int,
+  "residency_id" int,
+  "file_url" varchar(500),
+  "uploaded_time" timestamp
+);
+
+CREATE TABLE "logs" (
+  "id" serial PRIMARY KEY,
+  "user_id" int,
+  "action" varchar(255),
+  "timestamp" timestamp
+);
+
+COMMENT ON COLUMN "interviews"."score" IS 'Range: 0–10';
+
+ALTER TABLE "residencies" ADD FOREIGN KEY ("company_id") REFERENCES "users" ("id");
+
+ALTER TABLE "preferences" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
+
+ALTER TABLE "preferences" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
+
+ALTER TABLE "interviews" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
+
+ALTER TABLE "interviews" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
+
+ALTER TABLE "matches" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
+
+ALTER TABLE "matches" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
+
+ALTER TABLE "cvs" ADD FOREIGN KEY ("student_id") REFERENCES "users" ("id");
+
+ALTER TABLE "cvs" ADD FOREIGN KEY ("residency_id") REFERENCES "residencies" ("id");
+
+ALTER TABLE "logs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
