@@ -4,8 +4,30 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spring Boot config
+src/main/resources/application.properties
+
+# Node (if used for frontend)
+node_modules/
+dist/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
