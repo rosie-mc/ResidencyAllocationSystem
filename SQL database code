@@ -1,71 +1,73 @@
+-- ENUMS
+DROP TYPE IF EXISTS user_role CASCADE;
+CREATE TYPE user_role AS ENUM ('student', 'admin', 'company');
 
--- ENUM TYPES
-CREATE TYPE user_role AS ENUM ('stu', 'adm', 'com');
+DROP TYPE IF EXISTS college_year_enum CASCADE;
 CREATE TYPE college_year_enum AS ENUM ('1', '2', '3', '4', '5');
 
--- USERS TABLE
+-- USERS
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     role user_role NOT NULL,
     first_name VARCHAR(40) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-    email VARCHAR(40) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL, -- should be hashed
     course_code VARCHAR(15),
     college_year college_year_enum
 );
 
--- LOGS TABLE
+-- LOGS
 CREATE TABLE logs (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    user_id INT REFERENCES users(id) ON DELETE SET NULL,
     action VARCHAR(255),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- RESIDENCIES TABLE
+-- RESIDENCIES
 CREATE TABLE residencies (
     id SERIAL PRIMARY KEY,
     job_title VARCHAR(50),
     job_description TEXT,
-    job_slots INTEGER,
-    interview_quota INTEGER,
+    job_slots INT,
+    interview_quota INT,
     recruitment_description TEXT,
-    company_id INTEGER REFERENCES users(id) ON DELETE SET NULL
+    company_id INT REFERENCES users(id) ON DELETE SET NULL
 );
 
--- PREFERENCES TABLE
+-- PREFERENCES
 CREATE TABLE preferences (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
-    rank_position INTEGER,
-    round INTEGER,
-    ranking_stage INTEGER
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    rank_position INT NOT NULL,
+    round INT,
+    ranking_stage INT
 );
 
--- INTERVIEWS TABLE
+-- INTERVIEWS
 CREATE TABLE interviews (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
-    score INTEGER
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    score INT
 );
 
--- CVS TABLE
+-- CVS
 CREATE TABLE cvs (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
     file_url VARCHAR(500),
     uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- MATCHES TABLE
+-- MATCHES
 CREATE TABLE matches (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INTEGER REFERENCES residencies(id) ON DELETE CASCADE,
-    round INTEGER,
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    round INT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
