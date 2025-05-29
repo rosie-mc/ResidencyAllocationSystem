@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS matches, cvs, interviews, preferences, residencies, logs, users CASCADE;
+DROP TYPE IF EXISTS user_role, college_year_enum CASCADE;
+
 -- ENUMS
 DROP TYPE IF EXISTS user_role CASCADE;
 CREATE TYPE user_role AS ENUM ('student', 'admin', 'company');
@@ -51,7 +54,7 @@ CREATE TABLE interviews (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-    score INT
+    score INT CHECK (score BETWEEN 0 AND 10)
 );
 
 -- CVS
