@@ -1,11 +1,15 @@
 package epic_2;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cvs")
+@Data
 public class CV {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

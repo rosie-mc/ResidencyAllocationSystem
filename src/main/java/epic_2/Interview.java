@@ -1,10 +1,13 @@
 package epic_2;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "interviews")
+@Data
 public class Interview {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
