@@ -14,7 +14,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.0</version>
-        <relativePath/> <!-- important to inherit spring boot settings -->
+        <relativePath/>
     </parent>
 
     <properties>
@@ -22,7 +22,7 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Web (includes @RestController, etc.) -->
+        <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -35,13 +35,13 @@
             <version>42.6.0</version>
         </dependency>
 
-        <!-- Spring Data JPA (ORM) -->
+        <!-- Spring Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- DevTools (for hot reload) -->
+        <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -49,14 +49,14 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Optional: Lombok (if you use it later) -->
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.30</version>
-        <scope>provided</scope>
-    </dependency>
-
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
