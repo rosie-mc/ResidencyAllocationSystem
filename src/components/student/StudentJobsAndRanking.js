@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
+//mock data
 const mockJobs = [
   { id: '1', title: 'Intern @ Zerv', slots: 3, pay: '£3,000', description: 'isebaddie for money.' },
   { id: '2', title: 'Full stack dev @ totalcare', slots: 2, pay: '£28,000000', description: 'skincare diva X.' },
@@ -60,93 +61,118 @@ function StudentJobsAndRanking() {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
-      {/* Job Board */}
-      <div style={{ width: '40%', padding: '20px', borderRight: '1px solid black' }}>
-        <h3>Jobs Board</h3>
-        {jobs.map((job, index) => (
-          <div key={job.id} style={{ border: '1px solid gray', padding: '10px', marginBottom: '10px', cursor: 'pointer' }}
-            onClick={() => setSelectedJob(job)}>
-            <p><strong>{job.title}</strong></p>
-            <p>Slots: {job.slots}</p>
-            <p>Pay: {job.pay}</p>
-            <button onClick={() => handleAddToList(job, setLikeList, likeList, dislikeList)}>Add to Like</button>
-            <button onClick={() => handleAddToList(job, setDislikeList, dislikeList, likeList)}>Add to Dislike</button>
+    <div className="page-container">
+      <div className="job-board">
+        <h3 className="section-title">Jobs Board</h3>
+        {jobs.map((job) => (
+          <div key={job.id} className="job-card" onClick={() => setSelectedJob(job)}>
+            <p className="job-title">{job.title}</p>
+            <p className="job-subtitle">Slots: {job.slots} | Pay: {job.pay}</p>
+            <div className="button-group">
+              <button 
+                className="like-button" 
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  handleAddToList(job, setLikeList, likeList, dislikeList);
+                }}
+              >
+                Like
+              </button>
+
+              <button 
+                className="dislike-button" 
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  handleAddToList(job, setDislikeList, dislikeList, likeList);
+                }}
+              >
+                Dislike
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Like/Dislike Areas with drag-and-drop */}
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <div style={{ width: '60%', padding: '20px', display: 'flex', justifyContent: 'space-between' }}>
-          <Droppable droppableId="like">
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps} style={{ border: '1px solid green', width: '45%', padding: '10px' }}>
-                <h4>Like List</h4>
-                {likeList.map((job, index) => (
-                  <Draggable key={job.id} draggableId={job.id} index={index}>
-                    {(provided) => (
-                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-                        style={{ border: '1px solid gray', padding: '5px', margin: '5px', ...provided.draggableProps.style }}>
-                        {index + 1}. {job.title}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+      <div className="ranking-area">
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <div className="lists-container">
+            <Droppable droppableId="like">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps} className="like-box">
+                  <h4>Like List</h4>
+                  {likeList.map((job, index) => (
+                    <Draggable key={job.id} draggableId={job.id} index={index}>
+                      {(provided) => (
+                        <div 
+                          ref={provided.innerRef} 
+                          {...provided.draggableProps} 
+                          {...provided.dragHandleProps} 
+                          className="draggable-item"
+                        >
+                          {index + 1}. {job.title}
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
 
-          <Droppable droppableId="dislike">
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps} style={{ border: '1px solid red', width: '45%', padding: '10px' }}>
-                <h4>Dislike List</h4>
-                {dislikeList.map((job, index) => (
-                  <Draggable key={job.id} draggableId={job.id} index={index}>
-                    {(provided) => (
-                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-                        style={{ border: '1px solid gray', padding: '5px', margin: '5px', ...provided.draggableProps.style }}>
-                        {likeList.length + index + 1}. {job.title}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+            <Droppable droppableId="dislike">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps} className="dislike-box">
+                  <h4>Dislike List</h4>
+                  {dislikeList.map((job, index) => (
+                    <Draggable key={job.id} draggableId={job.id} index={index}>
+                      {(provided) => (
+                        <div 
+                          ref={provided.innerRef} 
+                          {...provided.draggableProps} 
+                          {...provided.dragHandleProps} 
+                          className="draggable-item"
+                        >
+                          {likeList.length + index + 1}. {job.title}
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+        </DragDropContext>
+
+        <div className="ranking-buttons">
+          <button className="view-button" onClick={buildFullRanking}>View Full Ranking</button>
+          <button className="reset-button" onClick={handleResetLists}>Reset Lists</button>
         </div>
-      </DragDropContext>
-
-      {/* Job Details Popup */}
-      {selectedJob && (
-        <div style={{ position: 'fixed', top: '20%', left: '20%', background: 'white', border: '1px solid black', padding: '20px', zIndex: 10 }}>
-          <h3>{selectedJob.title}</h3>
-          <p>Slots: {selectedJob.slots}</p>
-          <p>Pay: {selectedJob.pay}</p>
-          <p>{selectedJob.description}</p>
-          <button onClick={() => setSelectedJob(null)}>Close</button>
-        </div>
-      )}
-
-      {/* Build & Submit Ranking */}
-      <div style={{ width: '100%', padding: '20px' }}>
-        <button onClick={buildFullRanking} style={{ marginRight: '10px' }}>View Full Ranking</button>
-        <button onClick={handleResetLists} style={{ marginRight: '10px' }}>Reset Lists</button>
 
         {fullRanking && (
-          <div>
+          <div className="full-ranking">
             <h3>Full Ranking:</h3>
             <ol>
               {fullRanking.map((item, idx) => (
                 <li key={idx}>{item.title}</li>
               ))}
             </ol>
-            <button onClick={handleSubmitRanking}>Submit Ranking</button>
+            <button className="submit-button" onClick={handleSubmitRanking}>Submit Ranking</button>
           </div>
         )}
       </div>
+
+      {selectedJob && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <button className="close-button" onClick={() => setSelectedJob(null)}>X</button>
+            <h3>{selectedJob.title}</h3>
+            <p>Slots: {selectedJob.slots}</p>
+            <p>Pay: {selectedJob.pay}</p>
+            <p>{selectedJob.description}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

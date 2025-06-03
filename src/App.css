@@ -36,3 +36,198 @@
     transform: rotate(360deg);
   }
 }
+
+/* General Page Layout */
+.page-container {
+  display: flex;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #f8fafc, #ffffff);
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Left Column - Job Board */
+.job-board {
+  width: 40%;
+  margin-right: 20px;
+  background: #ffffff;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #4f46e5;
+  margin-bottom: 20px;
+}
+
+.job-card {
+  background: #f9fafb;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.job-title {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.job-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+.button-group {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.like-button, .dislike-button {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.like-button {
+  background-color: #22c55e;
+}
+
+.dislike-button {
+  background-color: #ef4444;
+}
+
+/* Right Column - Ranking Area */
+.ranking-area {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lists-container {
+  display: flex;
+  gap: 20px;
+}
+
+.like-box, .dislike-box {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border: 2px solid;
+}
+
+.like-box {
+  border-color: #22c55e;
+}
+
+.dislike-box {
+  border-color: #ef4444;
+}
+
+.draggable-item {
+  background: #f3f4f6;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+/* Buttons under ranking area */
+.ranking-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.view-button {
+  padding: 10px 20px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.reset-button {
+  padding: 10px 20px;
+  background-color: #9ca3af;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Full ranking box */
+.full-ranking {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.submit-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Popup Styling */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.popup {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+}
