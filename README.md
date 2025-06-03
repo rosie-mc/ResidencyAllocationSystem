@@ -20,40 +20,51 @@ Lombok (for clean entity boilerplate)
 
 Postman (for API testing)
 
-⚙️ Setup Instructions
-1️⃣ Install PostgreSQL
-Download PostgreSQL 15.x from: https://www.postgresql.org/download/
+🔧 Setup Instructions
+1️⃣ Install PostgreSQL (Database)
+Download and install PostgreSQL 15.x from:
+👉 https://www.postgresql.org/download/
 
-During setup, remember your username and password (e.g., user: postgres, password: yourPassword).
+During installation, choose a username (postgres) and set a password you'll remember.
 
-Create the database (either in pgAdmin or terminal):
+2️⃣ Create the database
+Open pgAdmin (or terminal psql), and run:
 
 sql
 Copy
 Edit
-CREATE DATABASE epic2database;
-2️⃣ Clone This Repository
+CREATE DATABASE residency_db;
+3️⃣ Clone the project repository
+In your terminal / IDE:
+
 bash
 Copy
 Edit
-git clone https://github.com/your-username/residency-matching-final.git
-cd residency-matching-final
-3️⃣ Configure Spring Boot Database Connection
-In src/main/resources/application.properties:
+git clone https://github.com/rosie-mc/ResidencyAllocationSystem.git
+cd ResidencyAllocationSystem
+4️⃣ Configure Spring Boot database connection
+Edit this file in your cloned repo:
+
+css
+Copy
+Edit
+src/main/resources/application.properties
+Set your database connection details:
 
 properties
 Copy
 Edit
-spring.datasource.url=jdbc:postgresql://localhost:5432/epic2database
+spring.datasource.url=jdbc:postgresql://localhost:5432/residency_db
 spring.datasource.username=postgres
-spring.datasource.password=yourPassword
+spring.datasource.password=yourActualPasswordHere
+
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-✅ Make sure your database tables are created by running the SQL schema provided below.
+✅ Replace yourActualPasswordHere with your real postgres password.
 
-📊 SQL Schema
-The latest version of the database structure is:
+5️⃣ Load database schema (tables)
+In pgAdmin → Query Tool → copy-paste the full SQL file:
 
 sql
 Copy
@@ -61,89 +72,91 @@ Edit
 DROP TABLE IF EXISTS matches, cvs, interviews, preferences, residencies, logs, users CASCADE;
 DROP TYPE IF EXISTS user_role, college_year_enum CASCADE;
 
--- ENUMS
 CREATE TYPE user_role AS ENUM ('student', 'admin', 'company');
 CREATE TYPE college_year_enum AS ENUM ('YEAR_1', 'YEAR_2', 'YEAR_3', 'YEAR_4', 'YEAR_5');
 
 -- USERS
 CREATE TABLE users (
-id SERIAL PRIMARY KEY,
-role user_role NOT NULL,
-first_name VARCHAR(40) NOT NULL,
-last_name VARCHAR(40) NOT NULL,
-email VARCHAR(255) UNIQUE NOT NULL,
-password VARCHAR(100) NOT NULL,
-course_code VARCHAR(15),
-college_year college_year_enum
+    id SERIAL PRIMARY KEY,
+    role user_role NOT NULL,
+    first_name VARCHAR(40) NOT NULL,
+    last_name VARCHAR(40) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    course_code VARCHAR(15),
+    college_year college_year_enum
 );
 
 -- LOGS
 CREATE TABLE logs (
-id SERIAL PRIMARY KEY,
-user_id INT REFERENCES users(id) ON DELETE SET NULL,
-action VARCHAR(255),
-timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE SET NULL,
+    action VARCHAR(255),
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- RESIDENCIES
 CREATE TABLE residencies (
-id SERIAL PRIMARY KEY,
-job_title VARCHAR(50),
-job_description TEXT,
-job_slots INT,
-interview_quota INT,
-recruitment_description TEXT,
-company_id INT REFERENCES users(id) ON DELETE SET NULL
+    id SERIAL PRIMARY KEY,
+    job_title VARCHAR(50),
+    job_description TEXT,
+    job_slots INT,
+    interview_quota INT,
+    recruitment_description TEXT,
+    company_id INT REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- PREFERENCES
 CREATE TABLE preferences (
-id SERIAL PRIMARY KEY,
-student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-rank_position INT NOT NULL,
-round INT,
-ranking_stage INT
+    id SERIAL PRIMARY KEY,
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    rank_position INT NOT NULL,
+    round INT,
+    ranking_stage INT
 );
 
 -- INTERVIEWS
 CREATE TABLE interviews (
-id SERIAL PRIMARY KEY,
-student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-score INT CHECK (score BETWEEN 0 AND 10)
+    id SERIAL PRIMARY KEY,
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    score INT CHECK (score BETWEEN 0 AND 10)
 );
 
 -- CVS
 CREATE TABLE cvs (
-id SERIAL PRIMARY KEY,
-student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-file_url VARCHAR(500),
-uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    file_url VARCHAR(500),
+    uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- MATCHES
 CREATE TABLE matches (
-id SERIAL PRIMARY KEY,
-student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-round INT,
-timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+    round INT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-▶️ Running the App
-Open the project in IntelliJ or your favorite IDE and run:
+6️⃣ Run the Spring Boot backend
+In IntelliJ (or any IDE), run:
 
-bash
 Copy
 Edit
 ResidencyMatchingApplication.java
-Or from terminal:
+Or via terminal:
 
 bash
 Copy
 Edit
 ./mvnw spring-boot:run
+✅ That’s it — server will run on:
+http://localhost:8080/
+
+
 📡 Trigger the Matching Algorithm
 Use Postman:
 
