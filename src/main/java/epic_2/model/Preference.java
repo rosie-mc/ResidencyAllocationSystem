@@ -1,4 +1,4 @@
-package epic_2;
+package epic_2.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

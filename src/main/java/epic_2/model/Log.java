@@ -1,4 +1,4 @@
-package epic_2;
+package epic_2.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,23 +6,19 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "matches")
+@Table(name = "logs")
 @Data
-public class Match {
+public class Log {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private User student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "residency_id")
-    private Residency residency;
-
-    private Integer round;
+    private String action;
 
     private LocalDateTime timestamp;
 }

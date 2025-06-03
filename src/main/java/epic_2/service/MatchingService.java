@@ -1,5 +1,10 @@
-package epic_2;
+package epic_2.service;
 
+import epic_2.model.*;
+import epic_2.repository.MatchRepository;
+import epic_2.repository.PreferenceRepository;
+import epic_2.repository.ResidencyRepository;
+import epic_2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
