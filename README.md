@@ -63,69 +63,69 @@ CREATE TYPE college_year_enum AS ENUM ('YEAR_1', 'YEAR_2', 'YEAR_3', 'YEAR_4', '
 
 -- USERS
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    role user_role NOT NULL,
-    first_name VARCHAR(40) NOT NULL,
-    last_name VARCHAR(40) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    course_code VARCHAR(15),
-    college_year college_year_enum
+id SERIAL PRIMARY KEY,
+role user_role NOT NULL,
+first_name VARCHAR(40) NOT NULL,
+last_name VARCHAR(40) NOT NULL,
+email VARCHAR(255) UNIQUE NOT NULL,
+password VARCHAR(100) NOT NULL,
+course_code VARCHAR(15),
+college_year college_year_enum
 );
 
 -- LOGS
 CREATE TABLE logs (
-    id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) ON DELETE SET NULL,
-    action VARCHAR(255),
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+id SERIAL PRIMARY KEY,
+user_id INT REFERENCES users(id) ON DELETE SET NULL,
+action VARCHAR(255),
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- RESIDENCIES
 CREATE TABLE residencies (
-    id SERIAL PRIMARY KEY,
-    job_title VARCHAR(50),
-    job_description TEXT,
-    job_slots INT,
-    interview_quota INT,
-    recruitment_description TEXT,
-    company_id INT REFERENCES users(id) ON DELETE SET NULL
+id SERIAL PRIMARY KEY,
+job_title VARCHAR(50),
+job_description TEXT,
+job_slots INT,
+interview_quota INT,
+recruitment_description TEXT,
+company_id INT REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- PREFERENCES
 CREATE TABLE preferences (
-    id SERIAL PRIMARY KEY,
-    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-    rank_position INT NOT NULL,
-    round INT,
-    ranking_stage INT
+id SERIAL PRIMARY KEY,
+student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+rank_position INT NOT NULL,
+round INT,
+ranking_stage INT
 );
 
 -- INTERVIEWS
 CREATE TABLE interviews (
-    id SERIAL PRIMARY KEY,
-    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-    score INT CHECK (score BETWEEN 0 AND 10)
+id SERIAL PRIMARY KEY,
+student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+score INT CHECK (score BETWEEN 0 AND 10)
 );
 
 -- CVS
 CREATE TABLE cvs (
-    id SERIAL PRIMARY KEY,
-    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-    file_url VARCHAR(500),
-    uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+id SERIAL PRIMARY KEY,
+student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+file_url VARCHAR(500),
+uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- MATCHES
 CREATE TABLE matches (
-    id SERIAL PRIMARY KEY,
-    student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
-    round INT,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+id SERIAL PRIMARY KEY,
+student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+residency_id INT NOT NULL REFERENCES residencies(id) ON DELETE CASCADE,
+round INT,
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ▶️ Running the App
 Open the project in IntelliJ or your favorite IDE and run:
@@ -152,12 +152,12 @@ bash
 Copy
 Edit
 src/
- ├── controller/
- ├── service/
- ├── model/
- ├── repository/
- └── resources/
-     └── application.properties
+├── controller/
+├── service/
+├── model/
+├── repository/
+└── resources/
+└── application.properties
 🧪 Testing Tips
 Insert test data into PostgreSQL using pgAdmin's query tool.
 
