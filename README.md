@@ -6,13 +6,17 @@ Java 17
 
 Spring Boot 3.2.x
 
+
 Spring Data JPA
+
 
 PostgreSQL 15.x
 
 pgAdmin 4 (optional GUI)
 
+
 Lombok (for clean entity boilerplate)
+
 
 Postman (for API testing)
 
