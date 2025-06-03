@@ -54,7 +54,7 @@ function AdminDashboard() {
               <tr>
                 <th>Name</th>
                 <th>Rankings</th>
-                <th>CV</th>
+                {/* <th>CV</th> */}
               </tr>
             </thead>
             <tbody>
@@ -62,7 +62,7 @@ function AdminDashboard() {
                 <tr key={idx}>
                   <td>{student.name}</td>
                   <td>{student.rankings}</td>
-                  <td><a href={`path_to_cvs/${student.cv}`} target="_blank" rel="noreferrer">View CV</a></td>
+                  {/* <td><a href={`path_to_cvs/${student.cv}`} target="_blank" rel="noreferrer">View CV</a></td> */}
                 </tr>
               ))}
             </tbody>
