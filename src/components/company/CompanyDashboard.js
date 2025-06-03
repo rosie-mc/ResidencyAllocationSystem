@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function CompanyDashboard() {
-  // MOCK DATA: Replace with backend data later
   const jobs = [
     {
       jobTitle: 'Intern @ Zerv',
@@ -12,7 +11,6 @@ function CompanyDashboard() {
     },
   ];
 
-  // Interview score state
   const [interviewScores, setInterviewScores] = useState({});
 
   const handleScoreChange = (student, score) => {
@@ -21,61 +19,69 @@ function CompanyDashboard() {
 
   const handleSubmit = () => {
     console.log("Submitted Interview Scores:", interviewScores);
-    // Connect this to backend using axios when ready
   };
 
   return (
-    <div style={{ display: 'flex', padding: '20px' }}>
+    <div className="company-container">
 
-      {/* LEFT SIDE: Applicants Table */}
-      <div style={{ width: '50%', borderRight: '1px solid black', paddingRight: '20px' }}>
-        <h3>Applicants by Job</h3>
+      <div className="company-panels">
 
-        {jobs.map((job, idx) => (
-          <div key={idx} style={{ marginBottom: '20px' }}>
-            <h4>{job.jobTitle}</h4>
-            <table border="1" cellPadding="5">
-              <thead>
-                <tr>
-                  <th>Student Name</th>
-                  <th>CV</th>
-                </tr>
-              </thead>
-              <tbody>
-                {job.applicants.map((applicant, idx2) => (
-                  <tr key={idx2}>
-                    <td>{applicant.studentName}</td>
-                    <td>
-                      <a href={`path_to_cvs/${applicant.cv}`} target="_blank" rel="noreferrer">
-                        View CV
-                      </a>
-                    </td>
+        {/* LEFT SIDE: Applicants */}
+        <div className="company-panel">
+          <h3 className="company-title">Applicants by Job</h3>
+
+          {jobs.map((job, idx) => (
+            <div key={idx} className="job-card">
+              <h4 className="job-title">{job.jobTitle}</h4>
+              <table className="company-table">
+                <thead>
+                  <tr>
+                    <th>Student Name</th>
+                    <th>CV</th>
                   </tr>
+                </thead>
+                <tbody>
+                  {job.applicants.map((applicant, idx2) => (
+                    <tr key={idx2}>
+                      <td>{applicant.studentName}</td>
+                      <td>
+                        <a href={`path_to_cvs/${applicant.cv}`} target="_blank" rel="noreferrer">
+                          View CV
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+
+        {/* RIGHT SIDE: Interview Scoring */}
+        <div className="company-panel">
+          <h3 className="company-title">Post-Interview Rankings</h3>
+
+          {jobs.flatMap(job => job.applicants).map((applicant, idx) => (
+            <div key={idx} className="score-entry">
+              <label>{applicant.studentName}:</label>
+              <select
+                className="score-select"
+                onChange={(e) => handleScoreChange(applicant.studentName, e.target.value)}
+                defaultValue=""
+              >
+                <option value="">Score</option>
+                {[...Array(11).keys()].map(score => (
+                  <option key={score} value={score}>{score}</option>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
-      </div>
+              </select>
+            </div>
+          ))}
 
-      {/* RIGHT SIDE: Interview Scoring */}
-      <div style={{ width: '50%', paddingLeft: '20px' }}>
-        <h3>Post-Interview Ranking</h3>
+          <button className="company-button" onClick={handleSubmit}>
+            Submit Interview Rankings
+          </button>
+        </div>
 
-        {/* Flatten applicants across jobs */}
-        {jobs.flatMap(job => job.applicants).map((applicant, idx) => (
-          <div key={idx} style={{ marginBottom: '10px' }}>
-            <label>{applicant.studentName}: </label>
-            <select onChange={(e) => handleScoreChange(applicant.studentName, e.target.value)} defaultValue="">
-              <option value="">Score</option>
-              {[...Array(11).keys()].map(score => (
-                <option key={score} value={score}>{score}</option>
-              ))}
-            </select>
-          </div>
-        ))}
-
-        <button onClick={handleSubmit}>Submit Interview Rankings</button>
       </div>
     </div>
   );

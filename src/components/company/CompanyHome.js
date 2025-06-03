@@ -23,50 +23,48 @@ function CompanyHome() {
 
   const handleSubmit = () => {
     console.log("Submitted:", formData);
-    // You will add your axios call here to send to backend
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Residency Allocation System - Company Portal</h2>
+    <div className="companyhome-container">
+      <div className="companyhome-box">
 
-      {/* System Explanation */}
-      <div style={{ marginBottom: '20px' }}>
-        <h3>How the System Works:</h3>
-        <p>
-          Welcome Residency Partners! This system allows you to post job positions, 
-          receive student applications, view uploaded CVs, rank applicants post-interview, 
-          and participate fairly in the residency allocation algorithm.
-        </p>
-        <p>
-          After posting jobs, students will rank them, upload CVs, and attend interviews. 
-          You will then score students, and the matching algorithm will generate final allocations.
-        </p>
-      </div>
+        <h2 className="companyhome-title">Company Portal</h2>
 
-      {/* Help + Dashboard Button */}
-      <div style={{ marginBottom: '20px' }}>
-        <button onClick={() => navigate('/company/dashboard')}>
+        <div className="companyhome-description">
+          <h3>How the System Works:</h3>
+          <p>
+            Welcome Residency Partners! This system allows you to post job positions, 
+            receive student applications, view uploaded CVs, rank applicants post-interview, 
+            and participate fairly in the residency allocation algorithm.
+          </p>
+          <p>
+            After posting jobs, students will rank them, upload CVs, and attend interviews. 
+            You will then score students, and the matching algorithm will generate final allocations.
+          </p>
+        </div>
+
+        <button className="companyhome-button-light" onClick={() => navigate('/company/dashboard')}>
           Go To Company Dashboard
         </button>
-      </div>
 
-      {/* Job Post Form */}
-      <div style={{ border: '1px solid black', padding: '20px' }}>
-        <h3>Add Residency Job Post</h3>
+        <h3 className="companyhome-subtitle">Add Residency Job Post</h3>
 
-        <input name="jobTitle" placeholder="Job Title" onChange={handleChange} /><br /><br />
-        <textarea name="description" placeholder="Job Description" rows="4" onChange={handleChange}></textarea><br /><br />
-        <input name="pay" placeholder="Pay" onChange={handleChange} /><br /><br />
-        <input name="jobSlots" placeholder="Number of Job Slots" onChange={handleChange} /><br /><br />
-        <input name="interviewSlots" placeholder="Number of Interview Slots" onChange={handleChange} /><br /><br />
+        <input name="jobTitle" placeholder="Job Title" className="companyhome-input" onChange={handleChange} />
+        <textarea name="description" placeholder="Job Description" className="companyhome-textarea" rows="4" onChange={handleChange}></textarea>
+        <input name="pay" placeholder="Pay" className="companyhome-input" onChange={handleChange} />
+        <input name="jobSlots" placeholder="Number of Job Slots" className="companyhome-input" onChange={handleChange} />
+        <input name="interviewSlots" placeholder="Number of Interview Slots" className="companyhome-input" onChange={handleChange} />
 
-        <label>
-          Follow Allocation System: 
-          <input name="allocationSystem" type="checkbox" onChange={handleChange} />
-        </label><br /><br />
+        <div className="companyhome-checkbox">
+          <label>
+            Follow Allocation System: 
+            <input name="allocationSystem" type="checkbox" onChange={handleChange} />
+          </label>
+        </div>
 
-        <button onClick={handleSubmit}>Submit Job Post</button>
+        <button className="companyhome-button" onClick={handleSubmit}>Submit Job Post</button>
+
       </div>
     </div>
   );

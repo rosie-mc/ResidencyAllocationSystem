@@ -11,30 +11,48 @@ function Login() {
   const handleSubmit = async () => {
     try {
       const response = await loginUser({ email, password });
-      // store token or user info if needed
       localStorage.setItem('user', JSON.stringify(response.data));
       setError('');
-      
-      // Redirect based on role (simplified, backend should return role info)
+
       const role = response.data.role;
       if (role === 'student') navigate('/student');
       else if (role === 'company') navigate('/company');
       else if (role === 'admin') navigate('/admin');
       else navigate('/');
-      
     } catch (err) {
       setError('Invalid email or password.');
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-      <button onClick={handleSubmit}>Login</button>
-      {error && <p style={{color:'red'}}>{error}</p>}
-      <p>Don't have an account? <button onClick={() => navigate('/register')}>Register</button></p>
+    <div className="login-container">
+      <div className="login-box">
+        <h2 className="login-title">Log in</h2>
+
+        <input
+          type="text"
+          className="login-input"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          className="login-input"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+
+        {error && <p className="error-text">{error}</p>}
+
+        <button className="login-button" onClick={handleSubmit}>Log in</button>
+
+        <div className="divider">or</div>
+
+        <button className="register-button" onClick={() => navigate('/register')}>Register</button>
+      </div>
     </div>
   );
 }
