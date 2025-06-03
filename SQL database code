@@ -1,26 +1,24 @@
+-- DROP everything safely first
 DROP TABLE IF EXISTS matches, cvs, interviews, preferences, residencies, logs, users CASCADE;
 DROP TYPE IF EXISTS user_role, college_year_enum CASCADE;
 
--- ENUMS
-DROP TYPE IF EXISTS user_role CASCADE;
+-- ENUM TYPES
 CREATE TYPE user_role AS ENUM ('student', 'admin', 'company');
+CREATE TYPE college_year_enum AS ENUM ('YEAR_1', 'YEAR_2', 'YEAR_3', 'YEAR_4', 'YEAR_5');
 
-DROP TYPE IF EXISTS college_year_enum CASCADE;
-CREATE TYPE college_year_enum AS ENUM ('1', '2', '3', '4', '5');
-
--- USERS
+-- USERS TABLE
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     role user_role NOT NULL,
     first_name VARCHAR(40) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL, -- should be hashed
+    password VARCHAR(100) NOT NULL,
     course_code VARCHAR(15),
     college_year college_year_enum
 );
 
--- LOGS
+-- LOGS TABLE
 CREATE TABLE logs (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE SET NULL,
@@ -28,7 +26,7 @@ CREATE TABLE logs (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- RESIDENCIES
+-- RESIDENCIES TABLE
 CREATE TABLE residencies (
     id SERIAL PRIMARY KEY,
     job_title VARCHAR(50),
@@ -39,7 +37,7 @@ CREATE TABLE residencies (
     company_id INT REFERENCES users(id) ON DELETE SET NULL
 );
 
--- PREFERENCES
+-- PREFERENCES TABLE
 CREATE TABLE preferences (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -49,7 +47,7 @@ CREATE TABLE preferences (
     ranking_stage INT
 );
 
--- INTERVIEWS
+-- INTERVIEWS TABLE
 CREATE TABLE interviews (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -57,7 +55,7 @@ CREATE TABLE interviews (
     score INT CHECK (score BETWEEN 0 AND 10)
 );
 
--- CVS
+-- CVS TABLE
 CREATE TABLE cvs (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -66,7 +64,7 @@ CREATE TABLE cvs (
     uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- MATCHES
+-- MATCHES TABLE
 CREATE TABLE matches (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
