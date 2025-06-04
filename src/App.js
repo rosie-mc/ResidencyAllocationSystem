@@ -1,3 +1,4 @@
+// Main app router: defines routes for authentication, student, company, and admin pages
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 

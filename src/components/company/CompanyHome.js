@@ -1,18 +1,24 @@
+// Import React core library and useState hook for state management
 import React, { useState } from 'react';
+// Import useNavigate hook for programmatic route navigation
 import { useNavigate } from 'react-router-dom';
 
+// Functional component for Company Home page
 function CompanyHome() {
+  // useNavigate hook to navigate between pages in the app
   const navigate = useNavigate();
 
+  // React state to store form data for new job post creation
   const [formData, setFormData] = useState({
-    jobTitle: '',
-    description: '',
-    pay: '',
-    jobSlots: '',
-    interviewSlots: '',
-    allocationSystem: false
+    jobTitle: '',          
+    description: '',       
+    pay: '',               
+    jobSlots: '',          
+    interviewSlots: '',    
+    allocationSystem: false 
   });
 
+  // Handles changes to form inputs (including checkbox logic)
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -21,16 +27,20 @@ function CompanyHome() {
     }));
   };
 
+  // Submits form data (currently only logs it to console)
   const handleSubmit = () => {
     console.log("Submitted:", formData);
   };
 
+  // JSX layout of the Company Home page UI
   return (
     <div className="companyhome-container">
       <div className="companyhome-box">
 
+        {/* Main heading for Company Portal */}
         <h2 className="companyhome-title">Company Portal</h2>
 
+        {/* Instructions on how the system works for residency partners */}
         <div className="companyhome-description">
           <h3>How the System Works:</h3>
           <p>
@@ -46,30 +56,68 @@ function CompanyHome() {
           </p>
         </div>
 
+        {/* Navigation button to Company Dashboard */}
         <button className="companyhome-button-light" onClick={() => navigate('/company/dashboard')}>
           Go To Company Dashboard
         </button>
 
+        {/* Section header for adding a new job post */}
         <h3 className="companyhome-subtitle">Add Residency Job Post</h3>
 
-        <input name="jobTitle" placeholder="Job Title" className="companyhome-input" onChange={handleChange} />
-        <textarea name="description" placeholder="Job Description" className="companyhome-textarea" rows="4" onChange={handleChange}></textarea>
-        <input name="pay" placeholder="Pay" className="companyhome-input" onChange={handleChange} />
-        <input name="jobSlots" placeholder="Number of Job Slots" className="companyhome-input" onChange={handleChange} />
-        <input name="interviewSlots" placeholder="Number of Interview Slots" className="companyhome-input" onChange={handleChange} />
+        {/* Input fields for job post details */}
+        <input 
+          name="jobTitle" 
+          placeholder="Job Title" 
+          className="companyhome-input" 
+          onChange={handleChange} 
+        />
+        <textarea 
+          name="description" 
+          placeholder="Job Description" 
+          className="companyhome-textarea" 
+          rows="4" 
+          onChange={handleChange}
+        ></textarea>
+        <input 
+          name="pay" 
+          placeholder="Pay" 
+          className="companyhome-input" 
+          onChange={handleChange} 
+        />
+        <input 
+          name="jobSlots" 
+          placeholder="Number of Job Slots" 
+          className="companyhome-input" 
+          onChange={handleChange} 
+        />
+        <input 
+          name="interviewSlots" 
+          placeholder="Number of Interview Slots" 
+          className="companyhome-input" 
+          onChange={handleChange} 
+        />
 
+        {/* Checkbox for selecting allocation system participation */}
         <div className="companyhome-checkbox">
           <label>
             Follow Allocation System: 
-            <input name="allocationSystem" type="checkbox" onChange={handleChange} />
+            <input 
+              name="allocationSystem" 
+              type="checkbox" 
+              onChange={handleChange} 
+            />
           </label>
         </div>
 
-        <button className="companyhome-button" onClick={handleSubmit}>Submit Job Post</button>
+        {/* Submit button for posting job */}
+        <button className="companyhome-button" onClick={handleSubmit}>
+          Submit Job Post
+        </button>
 
       </div>
     </div>
   );
 }
 
+// Export component for use in routing system
 export default CompanyHome;
