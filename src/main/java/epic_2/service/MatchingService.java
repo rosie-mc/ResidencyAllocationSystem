@@ -26,8 +26,10 @@ public class MatchingService {
     @Autowired
     private MatchRepository matchRepository;
 
+    /**
+     * The core matching algorithm — run per round.
+     */
     public void runMatchingAlgorithm(int round) {
-        // Step 1: Get all students with preferences
         List<User> students = userRepository.findAll().stream()
                 .filter(u -> u.getRole() == Role.student)
                 .toList();
@@ -35,23 +37,21 @@ public class MatchingService {
         List<Residency> residencies = residencyRepository.findAll();
         List<Preference> preferences = preferenceRepository.findAll();
 
-        // Step 2: Build maps for easy access
+        // Build student preference map
         Map<Long, List<Preference>> studentPrefsMap = new HashMap<>();
         for (Preference p : preferences) {
-            if (!studentPrefsMap.containsKey(p.getStudent().getId())) {
-                studentPrefsMap.put(p.getStudent().getId(), new ArrayList<>());
-            }
-            studentPrefsMap.get(p.getStudent().getId()).add(p);
+            studentPrefsMap.computeIfAbsent(p.getStudent().getId(), k -> new ArrayList<>()).add(p);
         }
 
+        // Track remaining slots for each residency
         Map<Long, Integer> slotsLeft = new HashMap<>();
         for (Residency r : residencies) {
             slotsLeft.put(r.getId(), r.getJobSlots());
         }
 
         Set<Long> matchedStudents = new HashSet<>();
-
         boolean changed = true;
+
         while (changed) {
             changed = false;
 
@@ -83,5 +83,12 @@ public class MatchingService {
         }
 
         System.out.println("✅ Matching complete: " + matchedStudents.size() + " students matched.");
+    }
+
+    /**
+     * Fetch match results for a student
+     */
+    public List<Match> getMatchesForStudent(Long studentId) {
+        return matchRepository.findByStudentId(studentId);
     }
 }
