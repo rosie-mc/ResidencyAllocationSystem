@@ -1,4 +1,4 @@
-package epic_2.service;
+package epic_2;
 
 import epic_2.model.*;
 import epic_2.repository.MatchRepository;
