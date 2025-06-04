@@ -3,11 +3,10 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 //mock data
 const mockJobs = [
-  { id: '1', title: 'Intern @ Zerv', slots: 3, pay: '£3,000', description: 'isebaddie for money.' },
-  { id: '2', title: 'Full stack dev @ totalcare', slots: 2, pay: '£28,000000', description: 'skincare diva X.' },
-  { id: '3', title: 'attendie @ patch', slots: 4, pay: '£2', description: 'software engineering hot gal summa.' }
-];
-
+  { id: '1', title: 'Intern @ MedTech Solutions', slots: 3, pay: '£2000', description: 'Work on medical software systems.' },
+  { id: '2', title: 'Developer @ HealthAI', slots: 2, pay: '£2200', description: 'Focus on healthcare analytics.' },
+  { id: '3', title: 'Software Engineer @ FinSecure', slots: 4, pay: '£2100', description: 'Develop backend financial systems.' }
+]; 
 function StudentJobsAndRanking() {
   const [jobs, setJobs] = useState(mockJobs);
   const [selectedJob, setSelectedJob] = useState(null);

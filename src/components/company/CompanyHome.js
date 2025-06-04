@@ -34,13 +34,15 @@ function CompanyHome() {
         <div className="companyhome-description">
           <h3>How the System Works:</h3>
           <p>
-            Welcome Residency Partners! This system allows you to post job positions, 
-            receive student applications, view uploaded CVs, rank applicants post-interview, 
-            and participate fairly in the residency allocation algorithm.
-          </p>
-          <p>
-            After posting jobs, students will rank them, upload CVs, and attend interviews. 
-            You will then score students, and the matching algorithm will generate final allocations.
+          Welcome Residency Partners! This system allows you to post job positions and match with students using the Gale-Shapley matching algorithm.
+          <br/><br/>
+          To begin, fill out the form below to create a new job post. Please ensure the company name is included in the job title e.g. Intern @ Company Name. You must select whether your posting will participate in the allocation system; if this option is not selected, you will be responsible for offering positions independently, outside of the Gale-Shapley process.
+          <br/><br/>
+          Once your job post is submitted, you will receive a list of applicants along with their CVs. You may choose which students to invite for interviews or decline applicants directly. Please note that all interview scheduling and coordination must be arranged directly with students.
+          <br/><br/>
+          After interviews are completed, you will assign each interviewed student a score from 0 to 10, with 10 indicating the strongest candidate. These scores are then used to automatically generate your ranked list of applicants, which is submitted into the Gale-Shapley matching algorithm.
+          <br/><br/>
+          Once the matching process is complete, students will be notified of their match. Upon student acceptance, you will be informed of your assigned candidate. If any positions remain unfilled, the process may repeat in later rounds until all available roles are matched.
           </p>
         </div>
 

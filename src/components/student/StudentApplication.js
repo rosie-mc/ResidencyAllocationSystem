@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 function StudentApplication() {
-  const submittedRankings = ['Intern @ Zerv', 'Full stack dev @ totalcare', 'attendie @ patch'];
+  const submittedRankings = ['Intern @ MedTech Solutions', 'Developer @ HealthAI', 'Software Engineer @ FinSecure'];
 
   const eligibleJobs = [
-    { jobTitle: 'Intern @ Zerv', competitors: ['Alice', 'Bob', 'Charlie'], successfulApplicant: 'TBD' },
-    { jobTitle: 'Full stack dev @ totalcare', competitors: ['David', 'Eve'], successfulApplicant: 'TBD' },
-    { jobTitle: 'attendie @ patch', competitors: ['Frank'], successfulApplicant: 'TBD' }
+    { jobTitle: 'Intern @ MedTech Solutions', competitors: ['Alice', 'Bob', 'Charlie'], successfulApplicant: 'TBD' },
+    { jobTitle: 'Developer @ HealthAI', competitors: ['David', 'Eve'], successfulApplicant: 'TBD' },
+    { jobTitle: 'Software Engineer @ FinSecure', competitors: ['Frank'], successfulApplicant: 'TBD' }
   ];
 
   const [cvUploads, setCvUploads] = useState({});
   const [interviewRankings, setInterviewRankings] = useState({});
-  const finalMatch = { jobTitle: 'Intern @ Zerv', status: 'Pending' };
+  const finalMatch = { jobTitle: 'Intern @ MedTech Solutions', status: 'Pending' };
 
   const handleCvUpload = (jobTitle, file) => {
     setCvUploads(prev => ({ ...prev, [jobTitle]: file.name }));

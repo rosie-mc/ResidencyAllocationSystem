@@ -10,15 +10,16 @@ function AdminDashboard() {
     currentRound: 1
   };
 
+  //mock data
   const students = [
-    { name: 'Alice', rankings: 'Intern @ Zerv > Full stack dev @ totalcare > attendie @ patch', cv: 'alice_cv.pdf' },
-    { name: 'Bob', rankings: 'Full stack dev @ totalcare > Intern @ Zerv > attendie @ patch', cv: 'bob_cv.pdf' }
+    { name: 'Alice', rankings: 'Intern @ MedTech Solutions > Developer @ HealthAI > Software Engineer @ FinSecure', cv: 'alice_cv.pdf' },
+    { name: 'Bob', rankings: 'Developer @ HealthAI > Software Engineer @ FinSecure > Intern @ MedTech Solutions', cv: 'bob_cv.pdf' }
   ];
 
   const companies = [
-    { jobTitle: 'Intern @ Zerv', description: 'isebaddie for money.', pay: '£30,000', jobSlots: 3, interviewSlots: 5, followingSystem: true },
-    { jobTitle: 'Full stack dev @ totalcare', description: 'skincare diva X.', pay: '£28,000', jobSlots: 2, interviewSlots: 4, followingSystem: false },
-    { jobTitle: 'attendie @ patch', description: 'software engineering hot gal summa', pay: '£29,000', jobSlots: 4, interviewSlots: 3, followingSystem: true }
+    { jobTitle: 'Intern @ MedTech Solutions', description: 'Work on medical software systems.', pay: '£2000', jobSlots: 3, interviewSlots: 5, followingSystem: true },
+    { jobTitle: 'Developer @ HealthAI', description: 'Focus on healthcare analytics.', pay: '£2200', jobSlots: 2, interviewSlots: 4, followingSystem: false },
+    { jobTitle: 'Software Engineer @ FinSecure', description: 'Develop backend financial systems.', pay: '£2100', jobSlots: 4, interviewSlots: 3, followingSystem: true }
   ];
 
   const [forms, setForms] = useState({

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 
 function CompanyDashboard() {
+  //mockdata
   const jobs = [
     {
-      jobTitle: 'Intern @ Zerv',
+      jobTitle: 'Intern @ MedTech Solutions',
       applicants: [
-        { studentName: 'Alice', cv: 'alice_cv.pdf' },
-        { studentName: 'Bob', cv: 'bob_cv.pdf' }
+       { studentName: 'Alice', cv: 'alice_cv.pdf' },
+       { studentName: 'Bob', cv: 'bob_cv.pdf' }
       ]
-    },
+    }
   ];
 
   const [interviewScores, setInterviewScores] = useState({});
