@@ -1,3 +1,6 @@
+/* Main frontend stylesheet: styles for login, register, student, company, admin, navbar, ranking UI,
+and overall layout */
+
 .login-container {
   display: flex;
   justify-content: center;
