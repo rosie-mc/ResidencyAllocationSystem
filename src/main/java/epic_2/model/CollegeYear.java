@@ -1,5 +1,5 @@
 package epic_2.model;
 
 public enum CollegeYear {
-    _1, _2, _3, _4, _5
+    FIRST_YEAR, SECOND_YEAR, THIRD_YEAR, FOURTH_YEAR, FIFTH_YEAR
 }
