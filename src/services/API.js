@@ -10,8 +10,8 @@ const getAuthHeaders = () => ({
 });
 
 // AUTH
-export const loginUser = (email, password) => axios.post(`${API_URL}/login`, { email, password });
-export const registerUser = (data) => axios.post(`${API_URL}/register`, data);
+export const loginUser = ({email, password}) => axios.post(`${API_URL}/api/login`, { email, password });
+export const registerUser = (data) => axios.post(`${API_URL}/api/auth/register`, data);
 
 // JOBS
 export const getJobs = () => axios.get(`${API_URL}/jobs`, getAuthHeaders());
