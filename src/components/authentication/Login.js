@@ -16,29 +16,27 @@ function Login() {
   const [error, setError] = useState('');        
 
   // Handles login form submission
-  const handleSubmit = async () => {
-    try {
-      // Call loginUser API function with email and password
-      const response = await loginUser({ email, password });
+const handleSubmit = async () => {
+  console.log("Login button clicked");
+  try {
+    const response = await loginUser({email, password});
+    console.log("Login response:", response);
 
-      // Save returned user data to localStorage for session persistence
-      localStorage.setItem('user', JSON.stringify(response.data));
+    localStorage.setItem('user', JSON.stringify(response.data));
+    setError('');
 
-      // Clear any previous error
-      setError('');
+    const role = response.data.role;
+    console.log("User role:", role);
 
-      // Redirect user based on their role
-      const role = response.data.role;
-      if (role === 'student') navigate('/student');
-      else if (role === 'company') navigate('/company');
-      else if (role === 'admin') navigate('/admin');
-      else navigate('/');
-      
-    } catch (err) {
-      // On failed login, show error message
-      setError('Invalid email or password.');
-    }
-  };
+    if (role === 'student') navigate('/student');
+    else if (role === 'company') navigate('/company');
+    else if (role === 'admin') navigate('/admin');
+    else navigate('/');
+  } catch (err) {
+    console.error("Login failed:", err);
+    setError('Invalid email or password.');
+  }
+};
 
   // JSX layout for login form
   return (
