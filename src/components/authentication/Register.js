@@ -21,10 +21,12 @@ function Register() {
 
   const handleSubmit = async () => {
     try {
+      console.log("Attempting registration with:", formData);
       await registerUser(formData);
       navigate('/');
     } catch (err) {
-      alert("Registration failed");
+      console.error("Registration failed:", err);
+     alert("Registration failed");
     }
   };
 
