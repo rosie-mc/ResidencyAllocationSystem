@@ -13,7 +13,7 @@ function Register() {
   // React state hook to store registration form input values
   const [formData, setFormData] = useState({
     email: '',        
-    password: '',     
+    password: '', 
     firstName: '',    
     lastName: '',     
     courseCode: '',   
@@ -29,16 +29,26 @@ function Register() {
 
   // Handles form submission to register a user
   const handleSubmit = async () => {
-    try {
-      // Call registerUser API function with form data
-      await registerUser(formData);
-      // On success, navigate back to login page
-      navigate('/');
-    } catch (err) {
-      // On error, show alert message
-      alert("Registration failed");
-    }
-  };
+  try {
+    const userData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      courseCode: formData.courseCode,
+      collegeYear: formData.courseYear,  // just "YEAR_2" already fine
+      role: formData.role
+    };
+
+    console.log("Submitting user data:", userData);
+
+    await registerUser(userData);
+    navigate('/');
+  } catch (err) {
+    console.error("Error during registration:", err); 
+    alert("Registration failed");
+  }
+};
 
   // JSX layout returned by component
   return (
@@ -73,21 +83,21 @@ function Register() {
           className="register-input" 
           onChange={handleChange} 
         />
-
-        {/* Dropdown for selecting course year */}
+        
         <select 
-          name="courseYear" 
-          className="register-input" 
-          onChange={handleChange} 
-          defaultValue=""
-        >
-          <option value="">Select Course Year</option>
-          <option value="1">1st Year</option>
-          <option value="2">2nd Year</option>
-          <option value="3">3rd Year</option>
-          <option value="4">4th Year</option>
-          <option value="5">5th Year</option>
-        </select>
+  name="courseYear" 
+  className="register-input" 
+  onChange={handleChange} 
+  defaultValue=""
+>
+  <option value="">Select Course Year</option>
+  <option value="_1">1st Year</option>
+  <option value="_2">2nd Year</option>
+  <option value="_3">3rd Year</option>
+  <option value="_4">4th Year</option>
+  <option value="_5">5th Year</option>
+</select>
+
 
         {/* Dropdown for selecting user role */}
         <select 
@@ -97,9 +107,9 @@ function Register() {
           defaultValue=""
         >
           <option value="">Select Role</option>
-          <option value="student">Student</option>
-          <option value="company">Company</option>
-          <option value="admin">Admin</option>
+          <option value="STUDENT">Student</option>
+          <option value="COMPANY">Company</option>
+          <option value="ADMIN">Admin</option>
         </select>
 
         {/* Password input */}
