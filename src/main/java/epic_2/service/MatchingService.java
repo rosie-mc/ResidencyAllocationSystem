@@ -31,7 +31,7 @@ public class MatchingService {
      */
     public void runMatchingAlgorithm(int round) {
         List<User> students = userRepository.findAll().stream()
-                .filter(u -> u.getRole() == Role.student)
+                .filter(u -> u.getRole() == UserRole.STUDENT)
                 .toList();
 
         List<Residency> residencies = residencyRepository.findAll();

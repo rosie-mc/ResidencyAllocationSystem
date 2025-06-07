@@ -13,8 +13,9 @@ public class User {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+    @Column(name = "role")
+    private UserRole role;
+
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -34,4 +35,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "college_year")
     private CollegeYear collegeYear;
+
 }

@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS matches, cvs, interviews, preferences, residencies, logs, u
 DROP TYPE IF EXISTS user_role, college_year_enum CASCADE;
 
 CREATE TYPE user_role AS ENUM ('student', 'admin', 'company');
-CREATE TYPE college_year_enum AS ENUM ('YEAR_1', 'YEAR_2', 'YEAR_3', 'YEAR_4', 'YEAR_5');
+CREATE TYPE college_year_enum AS ENUM ('_1', '_2', '_3', '_4', '_5');
 
 -- USERS
 CREATE TABLE users (

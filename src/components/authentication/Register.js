@@ -30,13 +30,19 @@ function Register() {
   // Handles form submission to register a user
   const handleSubmit = async () => {
     try {
-      // Call registerUser API function with form data
+
+      console.log("Attempting registration with:", formData);
+
       await registerUser(formData);
       // On success, navigate back to login page
       navigate('/');
     } catch (err) {
+
+      console.error("Registration failed:", err);
+     alert("Registration failed");
+
       // On error, show alert message
-      alert("Registration failed");
+
     }
   };
 
