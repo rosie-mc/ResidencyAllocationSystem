@@ -1,3 +1,4 @@
+// Axios API service: handles all backend HTTP requests for auth, jobs, CV, preferences, dashboards, admin, and company actions
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -9,8 +10,8 @@ const getAuthHeaders = () => ({
 });
 
 // AUTH
-export const loginUser = (email, password) => axios.post(`${API_URL}/login`, { email, password });
-export const registerUser = (data) => axios.post(`${API_URL}/register`, data);
+export const loginUser = ({email, password}) => axios.post(`${API_URL}/api/login`, { email, password });
+export const registerUser = (data) => axios.post(`${API_URL}/api/auth/register`, data);
 
 // JOBS
 export const getJobs = () => axios.get(`${API_URL}/jobs`, getAuthHeaders());
